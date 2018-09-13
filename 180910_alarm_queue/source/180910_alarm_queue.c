@@ -40,12 +40,13 @@
 #include "MK64F12.h"
 #include "fsl_debug_console.h"
 
+/* TODO: insert other include files here. */
 #include "FreeRTOS.h"
 #include "task.h"
 #include "semphr.h"
 #include "event_groups.h"
 #include "queue.h"
-/* TODO: insert other include files here. */
+
 
 /* TODO: insert other definitions and declarations here. */
 #define PRINTF_MIN_STACK (110)
@@ -65,12 +66,11 @@ alarm_t alarm;
 
 typedef struct
 {
-	int8_t shared_memory; //todo
 	SemaphoreHandle_t minutes_semaphore;
-	EventGroupHandle_t event_second_signal;//todo
-	SemaphoreHandle_t serial_port_mutex; //todo
-//	SemaphoreHandle_t shared_memory_mutex; //todo
-	QueueHandle_t mailbox; //todo
+	SemaphoreHandle_t hours_semaphore;
+	EventGroupHandle_t event_alarm_signal;
+	SemaphoreHandle_t serial_port_mutex;
+	QueueHandle_t mailbox;
 }task_args_t;
 
 //estructura para los mensajes en el mailbox
@@ -89,9 +89,10 @@ typedef struct
 void seconds_task(void*args)
 {
 	task_args_t task_args = GET_ARGS(args,task_args_t);
-	uint32_t seconds  = 0;
+	uint8_t seconds  = 0;
 	TickType_t last_wake_time = xTaskGetTickCount();
 	time_msg_t msg;
+	time_msg_t *pmsg;
 	msg.time_type = seconds_type;
 	for(;;)
 	{
@@ -99,23 +100,153 @@ void seconds_task(void*args)
 
 		if (60 == seconds)
 		{
-			xSemaphoreGive(task_args.minutes_semaphore);
 			seconds = 0;
+			xSemaphoreGive(task_args.minutes_semaphore);
 		}
 
 		msg.value = seconds;
 
 		if (alarm.second == seconds)
 		{
-			xEventGroupSetBits(task_args.event_second_signal, EVENT_SECONDS);
+			xEventGroupSetBits(task_args.event_alarm_signal, EVENT_SECONDS);
 		}
+//		else
+//		{
+//			xEventGroupClearBits(task_args.event_alarm_signal, EVENT_SECONDS);
+//		}
 
-		xQueueSend(task_args.mailbox,&msg,portMAX_DELAY);
+		pmsg = pvPortMalloc(sizeof(time_msg_t));
+		*pmsg = msg;
+		xQueueSend(task_args.mailbox,&pmsg,portMAX_DELAY);
 
 		vTaskDelayUntil(&last_wake_time, pdMS_TO_TICKS(1000));
 	}
 }
+
+void minutes_task(void*args)
+{
+	task_args_t task_args = GET_ARGS(args,task_args_t);
+	uint8_t minutes  = 0;
+	time_msg_t msg;
+	time_msg_t *pmsg;
+	msg.time_type = minutes_type;
+	for(;;)
+	{
+		xSemaphoreTake(task_args.minutes_semaphore,portMAX_DELAY);
+		minutes++;
+
+		if (60 == minutes)
+		{
+			minutes = 0;
+			xSemaphoreGive(task_args.hours_semaphore);
+		}
+
+		msg.value = minutes;
+
+		if (alarm.minute == minutes)
+		{
+			xEventGroupSetBits(task_args.event_alarm_signal, EVENT_MINUTES);
+		}
+//		else
+//		{
+//			xEventGroupClearBits(task_args.event_alarm_signal, EVENT_MINUTES);
+//		}
+
+		pmsg = pvPortMalloc(sizeof(time_msg_t));
+		*pmsg = msg;
+		xQueueSend(task_args.mailbox,&pmsg,portMAX_DELAY);
+	}
+}
+
+void hours_task(void*args)
+{
+	task_args_t task_args = GET_ARGS(args,task_args_t);
+	uint8_t hours  = 0;
+	time_msg_t msg;
+	time_msg_t *pmsg;
+	msg.time_type = hours_type;
+	for(;;)
+	{
+		xSemaphoreTake(task_args.hours_semaphore,portMAX_DELAY);
+		hours++;
+
+		if (24 == hours)
+		{
+			hours = 0;
+		}
+
+		msg.value = hours;
+
+		if (alarm.hour == hours)
+		{
+			xEventGroupSetBits(task_args.event_alarm_signal, EVENT_HOURS);
+		}
+//		else
+//		{
+//			xEventGroupClearBits(task_args.event_alarm_signal, EVENT_HOURS);
+//		}
+
+
+		pmsg = pvPortMalloc(sizeof(time_msg_t));
+		*pmsg = msg;
+		xQueueSend(task_args.mailbox,&pmsg,portMAX_DELAY);
+	}
+}
+
+void alarm_task(void*args)
+{
+	task_args_t task_args = GET_ARGS(args,task_args_t);
+	for(;;)
+	{
+		xEventGroupWaitBits(task_args.event_alarm_signal,EVENT_HOURS|EVENT_MINUTES|EVENT_SECONDS, pdTRUE, pdTRUE, portMAX_DELAY);
+		xSemaphoreTake(task_args.serial_port_mutex,portMAX_DELAY);
+		PRINTF("\rALARM\n");
+		xSemaphoreGive(task_args.serial_port_mutex);
+	}
+}
+
+void print_task(void*args)
+{
+	task_args_t task_args = GET_ARGS(args,task_args_t);
+	time_msg_t *received_msg;
+	uint8_t seconds = 0;
+	uint8_t minutes = 0;
+	uint8_t hours   = 0;
+	for(;;)
+	{
+		xQueueReceive(task_args.mailbox,&received_msg,portMAX_DELAY);
+
+		xSemaphoreTake(task_args.serial_port_mutex,portMAX_DELAY);
+
+		switch (received_msg->time_type) {
+		case seconds_type:
+			seconds = received_msg->value;
+			break;
+		case minutes_type:
+			minutes = received_msg->value;
+			break;
+		case hours_type:
+			hours   = received_msg->value;
+			break;
+		default:
+			PRINTF("\rError\n");
+			break;
+		}
+
+		PRINTF("\r%i:%i:%i\n", hours, minutes, seconds);
+		vPortFree(received_msg);
+		xSemaphoreGive(task_args.serial_port_mutex);
+	}
+}
+
 int main(void) {
+
+	static task_args_t args;
+	args.event_alarm_signal = xEventGroupCreate();
+	args.mailbox = xQueueCreate(3,sizeof(time_msg_t*));
+	args.minutes_semaphore = xSemaphoreCreateBinary();
+	args.hours_semaphore = xSemaphoreCreateBinary();
+	args.serial_port_mutex = xSemaphoreCreateMutex();
 
   	/* Init board hardware. */
     BOARD_InitBootPins();
@@ -125,17 +256,18 @@ int main(void) {
     BOARD_InitDebugConsole();
 
     alarm.hour = 0;
-    alarm.minute = 1;
-    alarm.second = 0;
+    alarm.minute = 0;
+    alarm.second = 5;
 
-    PRINTF("Hello World\n");
+//    PRINTF("Hello World\n");
     //TODO verificar (void*)&args
     //TODO configMAX_PRIORITIES
-    xTaskCreate(seconds_task, "seconds", configMINIMAL_STACK_SIZE, (void*)&args, configMAX_PRIORITIES, NULL);
-    xTaskCreate(minutes_task, "minutes", configMINIMAL_STACK_SIZE, (void*)&args, configMAX_PRIORITIES, NULL);
-    xTaskCreate(hours_task,   "hours",   configMINIMAL_STACK_SIZE, (void*)&args, configMAX_PRIORITIES, NULL);
+    xTaskCreate(seconds_task, "seconds", configMINIMAL_STACK_SIZE, (void*)&args, configMAX_PRIORITIES-1, NULL);
+    xTaskCreate(minutes_task, "minutes", configMINIMAL_STACK_SIZE, (void*)&args, configMAX_PRIORITIES-1, NULL);
+    xTaskCreate(hours_task,   "hours",   configMINIMAL_STACK_SIZE, (void*)&args, configMAX_PRIORITIES-1, NULL);
     xTaskCreate(alarm_task,   "alarm",   PRINTF_MIN_STACK,         (void*)&args, configMAX_PRIORITIES, NULL);
-    xTaskCreate(print_task,   "print",   PRINTF_MIN_STACK,         (void*)&args, configMAX_PRIORITIES, NULL);
+    xTaskCreate(print_task,   "print",   PRINTF_MIN_STACK,         (void*)&args, configMAX_PRIORITIES-1, NULL);
+    vTaskStartScheduler();
 
     /* Enter an infinite loop, just incrementing a counter. */
     while(1) {
