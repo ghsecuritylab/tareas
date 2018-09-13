@@ -69,7 +69,7 @@ typedef struct
 	SemaphoreHandle_t minutes_semaphore;
 	EventGroupHandle_t event_second_signal;//todo
 	SemaphoreHandle_t serial_port_mutex; //todo
-	SemaphoreHandle_t shared_memory_mutex; //todo
+//	SemaphoreHandle_t shared_memory_mutex; //todo
 	QueueHandle_t mailbox; //todo
 }task_args_t;
 
@@ -92,25 +92,25 @@ void seconds_task(void*args)
 	uint32_t seconds  = 0;
 	TickType_t last_wake_time = xTaskGetTickCount();
 	time_msg_t msg;
+	msg.time_type = seconds_type;
 	for(;;)
 	{
 		seconds++;
+
 		if (60 == seconds)
 		{
 			xSemaphoreGive(task_args.minutes_semaphore);
 			seconds = 0;
 		}
-//		xSemaphoreTake(task_args.serial_port_mutex,portMAX_DELAY);
-//		PRINTF("\rTime: %i seconds since reset\n",seconds);
-//		xSemaphoreGive(task_args.serial_port_mutex);
 
-//		xSemaphoreGive(task_args.seconds_signal);
+		msg.value = seconds;
+
 		if (alarm.second == seconds)
 		{
 			xEventGroupSetBits(task_args.event_second_signal, EVENT_SECONDS);
 		}
 
-		msg.
+		xQueueSend(task_args.mailbox,&msg,portMAX_DELAY);
 
 		vTaskDelayUntil(&last_wake_time, pdMS_TO_TICKS(1000));
 	}
