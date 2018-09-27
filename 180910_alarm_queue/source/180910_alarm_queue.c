@@ -55,6 +55,8 @@
 #define EVENT_MINUTES (1<<1)
 #define EVENT_HOURS   (1<<2)
 
+//#define FIRST60SCOUNTFLAG_STATE_H 1
+
 typedef struct
 {
 	uint8_t hour;
@@ -93,9 +95,17 @@ void seconds_task(void*args)
 	TickType_t last_wake_time = xTaskGetTickCount();
 	time_msg_t msg;
 	time_msg_t *pmsg;
+//	uint8_t first60sCount_flag = 1;
 	msg.time_type = seconds_type;
 	for(;;)
 	{
+		if (alarm.second == seconds)
+		{
+			xEventGroupSetBits(task_args.event_alarm_signal, EVENT_SECONDS);
+		}
+
+		vTaskDelayUntil(&last_wake_time, pdMS_TO_TICKS(1000));
+
 		seconds++;
 
 		if (60 == seconds)
@@ -105,21 +115,11 @@ void seconds_task(void*args)
 		}
 
 		msg.value = seconds;
-
-		if (alarm.second == seconds)
-		{
-			xEventGroupSetBits(task_args.event_alarm_signal, EVENT_SECONDS);
-		}
-//		else
-//		{
-//			xEventGroupClearBits(task_args.event_alarm_signal, EVENT_SECONDS);
-//		}
-
 		pmsg = pvPortMalloc(sizeof(time_msg_t));
 		*pmsg = msg;
 		xQueueSend(task_args.mailbox,&pmsg,portMAX_DELAY);
 
-		vTaskDelayUntil(&last_wake_time, pdMS_TO_TICKS(1000));
+
 	}
 }
 
@@ -132,6 +132,11 @@ void minutes_task(void*args)
 	msg.time_type = minutes_type;
 	for(;;)
 	{
+		if (alarm.minute == minutes)
+		{
+			xEventGroupSetBits(task_args.event_alarm_signal, EVENT_MINUTES);
+		}
+
 		xSemaphoreTake(task_args.minutes_semaphore,portMAX_DELAY);
 		minutes++;
 
@@ -142,16 +147,6 @@ void minutes_task(void*args)
 		}
 
 		msg.value = minutes;
-
-		if (alarm.minute == minutes)
-		{
-			xEventGroupSetBits(task_args.event_alarm_signal, EVENT_MINUTES);
-		}
-//		else
-//		{
-//			xEventGroupClearBits(task_args.event_alarm_signal, EVENT_MINUTES);
-//		}
-
 		pmsg = pvPortMalloc(sizeof(time_msg_t));
 		*pmsg = msg;
 		xQueueSend(task_args.mailbox,&pmsg,portMAX_DELAY);
@@ -167,6 +162,11 @@ void hours_task(void*args)
 	msg.time_type = hours_type;
 	for(;;)
 	{
+		if (alarm.hour == hours)
+		{
+			xEventGroupSetBits(task_args.event_alarm_signal, EVENT_HOURS);
+		}
+
 		xSemaphoreTake(task_args.hours_semaphore,portMAX_DELAY);
 		hours++;
 
@@ -176,17 +176,6 @@ void hours_task(void*args)
 		}
 
 		msg.value = hours;
-
-		if (alarm.hour == hours)
-		{
-			xEventGroupSetBits(task_args.event_alarm_signal, EVENT_HOURS);
-		}
-//		else
-//		{
-//			xEventGroupClearBits(task_args.event_alarm_signal, EVENT_HOURS);
-//		}
-
-
 		pmsg = pvPortMalloc(sizeof(time_msg_t));
 		*pmsg = msg;
 		xQueueSend(task_args.mailbox,&pmsg,portMAX_DELAY);
@@ -233,7 +222,7 @@ void print_task(void*args)
 			break;
 		}
 
-		PRINTF("\r%i:%i:%i\n", hours, minutes, seconds);
+		PRINTF("\r%2i:%2i:%2i\n", hours, minutes, seconds);
 		vPortFree(received_msg);
 		xSemaphoreGive(task_args.serial_port_mutex);
 	}
@@ -256,17 +245,17 @@ int main(void) {
     BOARD_InitDebugConsole();
 
     alarm.hour = 0;
-    alarm.minute = 0;
+    alarm.minute = 1;
     alarm.second = 5;
 
 //    PRINTF("Hello World\n");
     //TODO verificar (void*)&args
     //TODO configMAX_PRIORITIES
-    xTaskCreate(seconds_task, "seconds", configMINIMAL_STACK_SIZE, (void*)&args, configMAX_PRIORITIES-1, NULL);
-    xTaskCreate(minutes_task, "minutes", configMINIMAL_STACK_SIZE, (void*)&args, configMAX_PRIORITIES-1, NULL);
+    xTaskCreate(seconds_task, "seconds", configMINIMAL_STACK_SIZE, (void*)&args, configMAX_PRIORITIES-3, NULL);
+    xTaskCreate(minutes_task, "minutes", configMINIMAL_STACK_SIZE, (void*)&args, configMAX_PRIORITIES-2, NULL);
     xTaskCreate(hours_task,   "hours",   configMINIMAL_STACK_SIZE, (void*)&args, configMAX_PRIORITIES-1, NULL);
-    xTaskCreate(alarm_task,   "alarm",   PRINTF_MIN_STACK,         (void*)&args, configMAX_PRIORITIES, NULL);
-    xTaskCreate(print_task,   "print",   PRINTF_MIN_STACK,         (void*)&args, configMAX_PRIORITIES-1, NULL);
+    xTaskCreate(alarm_task,   "alarm",   PRINTF_MIN_STACK,         (void*)&args, configMAX_PRIORITIES-4, NULL);
+    xTaskCreate(print_task,   "print",   PRINTF_MIN_STACK,         (void*)&args, configMAX_PRIORITIES-4, NULL);
     vTaskStartScheduler();
 
     /* Enter an infinite loop, just incrementing a counter. */
