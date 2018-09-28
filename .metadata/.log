@@ -2948,3 +2948,371 @@ Caused by: java.lang.IllegalArgumentException: Attempted to beginRule: R/, does 
 	at org.eclipse.cdt.internal.core.model.CModelOperation.runOperation(CModelOperation.java:638)
 	at org.eclipse.cdt.internal.core.settings.model.AbstractCProjectDescriptionStorage.setProjectDescription(AbstractCProjectDescriptionStorage.java:203)
 	... 21 more
+
+!ENTRY org.eclipse.cdt.core 1 0 2018-09-26 21:33:16.484
+!MESSAGE Indexed '180926_testing' (0 sources, 0 headers) in 0 sec: 0 declarations; 0 references; 0 unresolved inclusions; 0 syntax errors; 0 unresolved names (0%)
+
+!ENTRY org.eclipse.jface.text 2 0 2018-09-26 21:36:18.926
+!MESSAGE Duplicate template id: 'org.eclipse.wst.xslt.templates.xpath.number'
+
+!ENTRY org.eclipse.jface.text 2 0 2018-09-26 21:36:18.927
+!MESSAGE Duplicate template id: 'org.eclipse.wst.xslt.templates.xpath.round'
+
+!ENTRY org.eclipse.jface.text 2 0 2018-09-26 22:59:07.423
+!MESSAGE Duplicate template id: 'org.eclipse.wst.xslt.templates.xpath.number'
+
+!ENTRY org.eclipse.jface.text 2 0 2018-09-26 22:59:07.424
+!MESSAGE Duplicate template id: 'org.eclipse.wst.xslt.templates.xpath.round'
+
+!ENTRY com.crt.log 4 -1 2018-09-26 23:08:35.594
+!MESSAGE Attempted to beginRule: R/, does not match outer scope rule: P/180926_example_lib_usage
+!STACK 0
+java.lang.Exception: org.eclipse.core.runtime.CoreException: Attempted to beginRule: R/, does not match outer scope rule: P/180926_example_lib_usage
+	at com.crt.utils.general.Reporter.log(Reporter.java:654)
+	at com.nxp.mcuxpresso.core.datamodels.SDKChipVendorDatabase.save(SDKChipVendorDatabase.java:410)
+	at com.crt.config.database.ChipVendor.save(ChipVendor.java:728)
+	at com.crt.config.database.TargetConfig.save(TargetConfig.java:1625)
+	at com.crt.config.SaveViewInfo.saving(SaveViewInfo.java:107)
+	at org.eclipse.core.internal.resources.SaveManager.executeLifecycle(SaveManager.java:389)
+	at org.eclipse.core.internal.resources.SaveManager$1.run(SaveManager.java:198)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.core.internal.resources.SaveManager.broadcastLifecycle(SaveManager.java:201)
+	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1186)
+	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1165)
+	at org.eclipse.core.internal.resources.Project.close(Project.java:193)
+	at org.eclipse.ui.actions.CloseResourceAction.invokeOperation(CloseResourceAction.java:135)
+	at org.eclipse.ui.actions.WorkspaceAction.execute(WorkspaceAction.java:156)
+	at org.eclipse.ui.actions.WorkspaceAction$1.runInWorkspace(WorkspaceAction.java:456)
+	at org.eclipse.core.internal.resources.InternalWorkspaceJob.run(InternalWorkspaceJob.java:39)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:56)
+Caused by: org.eclipse.core.runtime.CoreException: Attempted to beginRule: R/, does not match outer scope rule: P/180926_example_lib_usage
+	at org.eclipse.cdt.internal.core.settings.model.ExceptionFactory.createCoreException(ExceptionFactory.java:26)
+	at org.eclipse.cdt.internal.core.settings.model.AbstractCProjectDescriptionStorage.setProjectDescription(AbstractCProjectDescriptionStorage.java:205)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionStorageManager.setProjectDescription(CProjectDescriptionStorageManager.java:149)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionManager.setProjectDescription(CProjectDescriptionManager.java:853)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionManager.setProjectDescription(CProjectDescriptionManager.java:814)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionManager.setProjectDescription(CProjectDescriptionManager.java:808)
+	at org.eclipse.cdt.core.model.CoreModel.setProjectDescription(CoreModel.java:1388)
+	at com.nxp.mcuxpresso.core.datamodels.SDKChipVendorDatabase.save(SDKChipVendorDatabase.java:405)
+	... 15 more
+Caused by: java.lang.IllegalArgumentException: Attempted to beginRule: R/, does not match outer scope rule: P/180926_example_lib_usage
+	at org.eclipse.core.runtime.Assert.isLegal(Assert.java:63)
+	at org.eclipse.core.internal.jobs.ThreadJob.illegalPush(ThreadJob.java:134)
+	at org.eclipse.core.internal.jobs.ThreadJob.push(ThreadJob.java:389)
+	at org.eclipse.core.internal.jobs.ImplicitJobs.begin(ImplicitJobs.java:63)
+	at org.eclipse.core.internal.jobs.JobManager.beginRule(JobManager.java:308)
+	at org.eclipse.core.internal.resources.WorkManager.checkIn(WorkManager.java:121)
+	at org.eclipse.core.internal.resources.Workspace.prepareOperation(Workspace.java:2188)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2235)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2267)
+	at org.eclipse.cdt.internal.core.model.CModelOperation.runOperation(CModelOperation.java:638)
+	at org.eclipse.cdt.internal.core.settings.model.AbstractCProjectDescriptionStorage.setProjectDescription(AbstractCProjectDescriptionStorage.java:203)
+	... 21 more
+
+!ENTRY com.crt.log 1 0 2018-09-26 23:08:45.862
+!MESSAGE Trying to connect to redlink server on port 3025.
+
+!ENTRY com.crt.debugcommon 1 0 2018-09-26 23:08:45.865
+!MESSAGE RedlinkServer telnet session connected on port 3025->55786 @ 127.0.0.1
+
+!ENTRY com.crt.dsfdebug 1 0 2018-09-26 23:08:55.191
+!MESSAGE Telnet session connected on port 2338->35940 @ 127.0.0.1
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2018-09-26 23:17:20.468
+!MESSAGE Request for monitor: 'RequestMonitor (com.crt.dsfdebug.ui.DebugAllHelper$3$2@2388cd39): Status ERROR: com.crt.dsfdebug code=10001 GDB Control not accessible. null' resulted in an error.
+!SUBENTRY 1 com.crt.dsfdebug 4 10001 2018-09-26 23:17:20.468
+!MESSAGE GDB Control not accessible.
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2018-09-26 23:17:20.468
+!MESSAGE Request for monitor: 'RequestMonitor (com.crt.dsfdebug.ui.DebugAllHelper$3$2@3f77b267): Status ERROR: com.crt.dsfdebug code=10001 GDB Control not accessible. null' resulted in an error.
+!SUBENTRY 1 com.crt.dsfdebug 4 10001 2018-09-26 23:17:20.468
+!MESSAGE GDB Control not accessible.
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2018-09-26 23:17:20.468
+!MESSAGE Request for monitor: 'RequestMonitor (com.crt.dsfdebug.ui.DebugAllHelper$3$2@3f135fd1): Status ERROR: com.crt.dsfdebug code=10001 GDB Control not accessible. null' resulted in an error.
+!SUBENTRY 1 com.crt.dsfdebug 4 10001 2018-09-26 23:17:20.468
+!MESSAGE GDB Control not accessible.
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2018-09-26 23:17:20.469
+!MESSAGE Request for monitor: 'RequestMonitor (com.crt.dsfdebug.ui.DebugAllHelper$3$2@5a97bc0f): Status ERROR: com.crt.dsfdebug code=10001 GDB Control not accessible. null' resulted in an error.
+!SUBENTRY 1 com.crt.dsfdebug 4 10001 2018-09-26 23:17:20.469
+!MESSAGE GDB Control not accessible.
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2018-09-26 23:17:20.469
+!MESSAGE Request for monitor: 'RequestMonitor (com.crt.dsfdebug.ui.DebugAllHelper$3$2@2ef913fe): Status ERROR: com.crt.dsfdebug code=10001 GDB Control not accessible. null' resulted in an error.
+!SUBENTRY 1 com.crt.dsfdebug 4 10001 2018-09-26 23:17:20.469
+!MESSAGE GDB Control not accessible.
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2018-09-26 23:17:20.470
+!MESSAGE Request for monitor: 'RequestMonitor (com.crt.dsfdebug.ui.DebugAllHelper$3$2@2c9f78cc): Status ERROR: com.crt.dsfdebug code=10001 GDB Control not accessible. null' resulted in an error.
+!SUBENTRY 1 com.crt.dsfdebug 4 10001 2018-09-26 23:17:20.470
+!MESSAGE GDB Control not accessible.
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2018-09-26 23:17:20.470
+!MESSAGE Request for monitor: 'RequestMonitor (com.crt.dsfdebug.ui.DebugAllHelper$3$2@9d75759): Status ERROR: com.crt.dsfdebug code=10001 GDB Control not accessible. null' resulted in an error.
+!SUBENTRY 1 com.crt.dsfdebug 4 10001 2018-09-26 23:17:20.471
+!MESSAGE GDB Control not accessible.
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2018-09-26 23:17:20.471
+!MESSAGE Request for monitor: 'RequestMonitor (com.crt.dsfdebug.ui.DebugAllHelper$3$2@6e47e5a8): Status ERROR: com.crt.dsfdebug code=10001 GDB Control not accessible. null' resulted in an error.
+!SUBENTRY 1 com.crt.dsfdebug 4 10001 2018-09-26 23:17:20.471
+!MESSAGE GDB Control not accessible.
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2018-09-26 23:17:20.471
+!MESSAGE Request for monitor: 'RequestMonitor (com.crt.dsfdebug.ui.DebugAllHelper$3$2@8c77d7d): Status ERROR: com.crt.dsfdebug code=10001 GDB Control not accessible. null' resulted in an error.
+!SUBENTRY 1 com.crt.dsfdebug 4 10001 2018-09-26 23:17:20.471
+!MESSAGE GDB Control not accessible.
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2018-09-26 23:17:20.471
+!MESSAGE Request for monitor: 'RequestMonitor (com.crt.dsfdebug.ui.DebugAllHelper$3$2@5fc93db1): Status ERROR: com.crt.dsfdebug code=10001 GDB Control not accessible. null' resulted in an error.
+!SUBENTRY 1 com.crt.dsfdebug 4 10001 2018-09-26 23:17:20.471
+!MESSAGE GDB Control not accessible.
+
+!ENTRY com.crt.debugcommon 4 0 2018-09-26 23:17:20.627
+!MESSAGE Unable to parse ProbeList output to get probe ref count: []
+
+!ENTRY com.crt.dsfdebug 1 0 2018-09-26 23:33:12.981
+!MESSAGE Telnet session connected on port 2338->36052 @ 127.0.0.1
+
+!ENTRY com.crt.dsfdebug 1 0 2018-09-26 23:44:37.145
+!MESSAGE Telnet session connected on port 2338->36088 @ 127.0.0.1
+
+!ENTRY com.crt.dsfdebug 1 0 2018-09-26 23:53:40.798
+!MESSAGE Telnet session connected on port 2338->36672 @ 127.0.0.1
+!SESSION 2018-09-27 08:46:06.921 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=1.8.0_161
+java.vendor=Oracle Corporation
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Command-line arguments:  -os linux -ws gtk -arch x86_64
+
+!ENTRY org.eclipse.jface 2 0 2018-09-27 08:50:10.293
+!MESSAGE Keybinding conflicts occurred.  They may interfere with normal accelerator operation.
+!SUBENTRY 1 org.eclipse.jface 2 0 2018-09-27 08:50:10.293
+!MESSAGE A conflict occurred for CTRL+U:
+Binding(CTRL+U,
+	ParameterizedCommand(Command(com.nxp.swtools.clocks.commands.unlockAll,Unlock All Settings,
+		,
+		Category(org.eclipse.core.commands.categories.autogenerated,Uncategorized,Commands that were either auto-generated or have no category,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@22e1a1dc,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+Binding(CTRL+U,
+	ParameterizedCommand(Command(org.eclipse.jdt.debug.ui.commands.Execute,Execute,
+		Evaluate selected text,
+		Category(org.eclipse.debug.ui.category.run,Run/Debug,Run/Debug command category,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@14b4d90b,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+
+!ENTRY org.eclipse.launchbar.core 2 0 2018-09-27 08:50:15.547
+!MESSAGE Enablement expression is missing for descriptor type org.eclipse.cdt.debug.core.coreBuildDescriptorType
+
+!ENTRY org.eclipse.launchbar.core 2 0 2018-09-27 08:50:15.553
+!MESSAGE Enablement expression is missing for config provider for org.eclipse.cdt.debug.core.coreBuildDescriptorType
+
+!ENTRY org.eclipse.launchbar.core 2 0 2018-09-27 08:50:15.553
+!MESSAGE Enablement expression is missing for config provider for org.eclipse.cdt.debug.core.coreBuildDescriptorType
+
+!ENTRY com.nxp.mcuxpresso.core.datamodels 1 0 2018-09-27 08:50:38.985
+!MESSAGE Using manifest XSD 'rsc/manifest_v3.3.xsd' for manifest 'FRDM-K64F_manifest_v3_3.xml'.
+
+!ENTRY com.nxp.mcuxpresso.core.datamodels 1 0 2018-09-27 08:50:39.340
+!MESSAGE Using SDK manifest 'FRDM-K64F_manifest_v3_3.xml'.
+!SESSION 2018-09-27 09:08:34.925 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=1.8.0_161
+java.vendor=Oracle Corporation
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Command-line arguments:  -os linux -ws gtk -arch x86_64
+
+!ENTRY org.eclipse.jface 2 0 2018-09-27 09:08:46.251
+!MESSAGE Keybinding conflicts occurred.  They may interfere with normal accelerator operation.
+!SUBENTRY 1 org.eclipse.jface 2 0 2018-09-27 09:08:46.251
+!MESSAGE A conflict occurred for CTRL+U:
+Binding(CTRL+U,
+	ParameterizedCommand(Command(com.nxp.swtools.clocks.commands.unlockAll,Unlock All Settings,
+		,
+		Category(org.eclipse.core.commands.categories.autogenerated,Uncategorized,Commands that were either auto-generated or have no category,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@63d75087,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+Binding(CTRL+U,
+	ParameterizedCommand(Command(org.eclipse.jdt.debug.ui.commands.Execute,Execute,
+		Evaluate selected text,
+		Category(org.eclipse.debug.ui.category.run,Run/Debug,Run/Debug command category,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@4c8afba,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+
+!ENTRY com.nxp.mcuxpresso.core.datamodels 1 0 2018-09-27 09:08:49.221
+!MESSAGE Using manifest XSD 'rsc/manifest_v3.3.xsd' for manifest 'FRDM-K64F_manifest_v3_3.xml'.
+
+!ENTRY com.nxp.mcuxpresso.core.datamodels 1 0 2018-09-27 09:08:49.475
+!MESSAGE Using SDK manifest 'FRDM-K64F_manifest_v3_3.xml'.
+
+!ENTRY org.eclipse.jface.text 2 0 2018-09-27 09:08:51.736
+!MESSAGE Duplicate template id: 'org.eclipse.wst.xslt.templates.xpath.number'
+
+!ENTRY org.eclipse.jface.text 2 0 2018-09-27 09:08:51.736
+!MESSAGE Duplicate template id: 'org.eclipse.wst.xslt.templates.xpath.round'
+
+!ENTRY org.eclipse.launchbar.core 2 0 2018-09-27 09:08:52.069
+!MESSAGE Enablement expression is missing for descriptor type org.eclipse.cdt.debug.core.coreBuildDescriptorType
+
+!ENTRY org.eclipse.launchbar.core 2 0 2018-09-27 09:08:52.083
+!MESSAGE Enablement expression is missing for config provider for org.eclipse.cdt.debug.core.coreBuildDescriptorType
+
+!ENTRY org.eclipse.launchbar.core 2 0 2018-09-27 09:08:52.084
+!MESSAGE Enablement expression is missing for config provider for org.eclipse.cdt.debug.core.coreBuildDescriptorType
+
+!ENTRY com.crt.dsfdebug 1 0 2018-09-27 09:14:26.884
+!MESSAGE Telnet session connected on port 2338->43258 @ 127.0.0.1
+!SESSION 2018-09-27 19:27:10.706 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=1.8.0_161
+java.vendor=Oracle Corporation
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Command-line arguments:  -os linux -ws gtk -arch x86_64
+
+!ENTRY org.eclipse.jface 2 0 2018-09-27 19:27:55.526
+!MESSAGE Keybinding conflicts occurred.  They may interfere with normal accelerator operation.
+!SUBENTRY 1 org.eclipse.jface 2 0 2018-09-27 19:27:55.526
+!MESSAGE A conflict occurred for CTRL+U:
+Binding(CTRL+U,
+	ParameterizedCommand(Command(com.nxp.swtools.clocks.commands.unlockAll,Unlock All Settings,
+		,
+		Category(org.eclipse.core.commands.categories.autogenerated,Uncategorized,Commands that were either auto-generated or have no category,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@61555218,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+Binding(CTRL+U,
+	ParameterizedCommand(Command(org.eclipse.jdt.debug.ui.commands.Execute,Execute,
+		Evaluate selected text,
+		Category(org.eclipse.debug.ui.category.run,Run/Debug,Run/Debug command category,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@1fcf73b9,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+
+!ENTRY com.nxp.mcuxpresso.core.datamodels 1 0 2018-09-27 19:28:02.534
+!MESSAGE Using manifest XSD 'rsc/manifest_v3.3.xsd' for manifest 'FRDM-K64F_manifest_v3_3.xml'.
+
+!ENTRY com.nxp.mcuxpresso.core.datamodels 1 0 2018-09-27 19:28:02.937
+!MESSAGE Using SDK manifest 'FRDM-K64F_manifest_v3_3.xml'.
+
+!ENTRY org.eclipse.launchbar.core 2 0 2018-09-27 19:28:05.906
+!MESSAGE Enablement expression is missing for descriptor type org.eclipse.cdt.debug.core.coreBuildDescriptorType
+
+!ENTRY org.eclipse.launchbar.core 2 0 2018-09-27 19:28:05.922
+!MESSAGE Enablement expression is missing for config provider for org.eclipse.cdt.debug.core.coreBuildDescriptorType
+
+!ENTRY org.eclipse.launchbar.core 2 0 2018-09-27 19:28:05.922
+!MESSAGE Enablement expression is missing for config provider for org.eclipse.cdt.debug.core.coreBuildDescriptorType
+
+!ENTRY org.eclipse.jface.text 2 0 2018-09-27 19:28:07.752
+!MESSAGE Duplicate template id: 'org.eclipse.wst.xslt.templates.xpath.number'
+
+!ENTRY org.eclipse.jface.text 2 0 2018-09-27 19:28:07.753
+!MESSAGE Duplicate template id: 'org.eclipse.wst.xslt.templates.xpath.round'
+
+!ENTRY com.crt.dsfdebug 1 0 2018-09-27 19:32:08.650
+!MESSAGE Telnet session connected on port 2338->47194 @ 127.0.0.1
+!SESSION 2018-09-28 12:00:20.256 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=1.8.0_161
+java.vendor=Oracle Corporation
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Command-line arguments:  -os linux -ws gtk -arch x86_64
+
+!ENTRY org.eclipse.jface 2 0 2018-09-28 12:01:30.602
+!MESSAGE Keybinding conflicts occurred.  They may interfere with normal accelerator operation.
+!SUBENTRY 1 org.eclipse.jface 2 0 2018-09-28 12:01:30.602
+!MESSAGE A conflict occurred for CTRL+U:
+Binding(CTRL+U,
+	ParameterizedCommand(Command(com.nxp.swtools.clocks.commands.unlockAll,Unlock All Settings,
+		,
+		Category(org.eclipse.core.commands.categories.autogenerated,Uncategorized,Commands that were either auto-generated or have no category,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@5c65fa69,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+Binding(CTRL+U,
+	ParameterizedCommand(Command(org.eclipse.jdt.debug.ui.commands.Execute,Execute,
+		Evaluate selected text,
+		Category(org.eclipse.debug.ui.category.run,Run/Debug,Run/Debug command category,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@38d308e7,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+
+!ENTRY com.nxp.mcuxpresso.core.datamodels 1 0 2018-09-28 12:01:37.577
+!MESSAGE Using manifest XSD 'rsc/manifest_v3.3.xsd' for manifest 'FRDM-K64F_manifest_v3_3.xml'.
+
+!ENTRY com.nxp.mcuxpresso.core.datamodels 1 0 2018-09-28 12:01:37.934
+!MESSAGE Using SDK manifest 'FRDM-K64F_manifest_v3_3.xml'.
+
+!ENTRY org.eclipse.jface.text 2 0 2018-09-28 12:01:41.521
+!MESSAGE Duplicate template id: 'org.eclipse.wst.xslt.templates.xpath.number'
+
+!ENTRY org.eclipse.jface.text 2 0 2018-09-28 12:01:41.521
+!MESSAGE Duplicate template id: 'org.eclipse.wst.xslt.templates.xpath.round'
+
+!ENTRY org.eclipse.launchbar.core 2 0 2018-09-28 12:01:41.694
+!MESSAGE Enablement expression is missing for descriptor type org.eclipse.cdt.debug.core.coreBuildDescriptorType
+
+!ENTRY org.eclipse.launchbar.core 2 0 2018-09-28 12:01:41.698
+!MESSAGE Enablement expression is missing for config provider for org.eclipse.cdt.debug.core.coreBuildDescriptorType
+
+!ENTRY org.eclipse.launchbar.core 2 0 2018-09-28 12:01:41.698
+!MESSAGE Enablement expression is missing for config provider for org.eclipse.cdt.debug.core.coreBuildDescriptorType
+
+!ENTRY com.crt.log 4 -1 2018-09-28 12:04:26.820
+!MESSAGE Attempted to beginRule: R/, does not match outer scope rule: P/180926_testing
+!STACK 0
+java.lang.Exception: org.eclipse.core.runtime.CoreException: Attempted to beginRule: R/, does not match outer scope rule: P/180926_testing
+	at com.crt.utils.general.Reporter.log(Reporter.java:654)
+	at com.nxp.mcuxpresso.core.datamodels.SDKChipVendorDatabase.save(SDKChipVendorDatabase.java:410)
+	at com.crt.config.database.ChipVendor.save(ChipVendor.java:728)
+	at com.crt.config.database.TargetConfig.save(TargetConfig.java:1625)
+	at com.crt.config.SaveViewInfo.saving(SaveViewInfo.java:107)
+	at org.eclipse.core.internal.resources.SaveManager.executeLifecycle(SaveManager.java:389)
+	at org.eclipse.core.internal.resources.SaveManager$1.run(SaveManager.java:198)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.core.internal.resources.SaveManager.broadcastLifecycle(SaveManager.java:201)
+	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1186)
+	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1165)
+	at org.eclipse.core.internal.resources.Project.close(Project.java:193)
+	at org.eclipse.ui.actions.CloseResourceAction.invokeOperation(CloseResourceAction.java:135)
+	at org.eclipse.ui.actions.WorkspaceAction.execute(WorkspaceAction.java:156)
+	at org.eclipse.ui.actions.WorkspaceAction$1.runInWorkspace(WorkspaceAction.java:456)
+	at org.eclipse.core.internal.resources.InternalWorkspaceJob.run(InternalWorkspaceJob.java:39)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:56)
+Caused by: org.eclipse.core.runtime.CoreException: Attempted to beginRule: R/, does not match outer scope rule: P/180926_testing
+	at org.eclipse.cdt.internal.core.settings.model.ExceptionFactory.createCoreException(ExceptionFactory.java:26)
+	at org.eclipse.cdt.internal.core.settings.model.AbstractCProjectDescriptionStorage.setProjectDescription(AbstractCProjectDescriptionStorage.java:205)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionStorageManager.setProjectDescription(CProjectDescriptionStorageManager.java:149)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionManager.setProjectDescription(CProjectDescriptionManager.java:853)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionManager.setProjectDescription(CProjectDescriptionManager.java:814)
+	at org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionManager.setProjectDescription(CProjectDescriptionManager.java:808)
+	at org.eclipse.cdt.core.model.CoreModel.setProjectDescription(CoreModel.java:1388)
+	at com.nxp.mcuxpresso.core.datamodels.SDKChipVendorDatabase.save(SDKChipVendorDatabase.java:405)
+	... 15 more
+Caused by: java.lang.IllegalArgumentException: Attempted to beginRule: R/, does not match outer scope rule: P/180926_testing
+	at org.eclipse.core.runtime.Assert.isLegal(Assert.java:63)
+	at org.eclipse.core.internal.jobs.ThreadJob.illegalPush(ThreadJob.java:134)
+	at org.eclipse.core.internal.jobs.ThreadJob.push(ThreadJob.java:389)
+	at org.eclipse.core.internal.jobs.ImplicitJobs.begin(ImplicitJobs.java:63)
+	at org.eclipse.core.internal.jobs.JobManager.beginRule(JobManager.java:308)
+	at org.eclipse.core.internal.resources.WorkManager.checkIn(WorkManager.java:121)
+	at org.eclipse.core.internal.resources.Workspace.prepareOperation(Workspace.java:2188)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2235)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2267)
+	at org.eclipse.cdt.internal.core.model.CModelOperation.runOperation(CModelOperation.java:638)
+	at org.eclipse.cdt.internal.core.settings.model.AbstractCProjectDescriptionStorage.setProjectDescription(AbstractCProjectDescriptionStorage.java:203)
+	... 21 more
